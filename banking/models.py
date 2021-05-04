@@ -6,13 +6,18 @@ from django.db import models
 	This stores all customers of this bank .
 '''
 class Customer(models.Model):
+	userName = models.CharField(max_length=128, unique=True)
 	firstName = models.CharField(max_length=128)
 	lastName =  models.CharField(max_length=128)
 	email = 	models.CharField(max_length=128)
 	phone = 	models.CharField(max_length=128)
+	password =  models.CharField(max_length=128)
 
 	# completed, pending, blocked, error
 	verificationStatus = models.CharField(max_length=128)
+
+	def __str__(self):
+		return f"{self.userName}, {self.firstName}, {self.lastName}, {self.email}"
 
 '''
 	Every address maps to an existing customer .

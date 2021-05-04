@@ -5,5 +5,36 @@
 </head>
 <body>
 	<h1>Register</h1>
+	<form action="" method="post">
+		{% csrf_token %}
+
+		<div>
+			<input type="text" name="userName" placeholder="user name">	
+		</div>
+
+		<div>
+			<input type="text" name="firstName" placeholder="first name">	
+		</div>
+		
+		<div>
+			<input type="text" name="lastName" placeholder="last name">	
+		</div>
+		
+		<div>
+			<input type="email" name="email" placeholder="email id">	
+		</div>
+		
+		<div>
+			<input type="text" name="phone" placeholder="phone no. or mobile no. ex: +911234567890">	
+		</div>
+		
+		<div>
+			<input type="password" name="password" placeholder="password">	
+		</div>
+		<div>
+			<input type="submit" name="submit" value="Register">	
+		</div>
+		
+	</form>
 </body>
 </html>
