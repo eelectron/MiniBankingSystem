@@ -9,4 +9,5 @@ urlpatterns = [
 	path("addAddress/", views.addAddress, name="address"),
 	path("createAccount/", views.createAccount, name="account"),
 	path("transfer/", views.transfer, name="transfer"),
+	path("mainPage/", views.mainPage, name="mainPage"),
 ]

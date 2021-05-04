@@ -11,7 +11,7 @@ class Customer(models.Model):
 	lastName =  models.CharField(max_length=128)
 	email = 	models.CharField(max_length=128)
 	phone = 	models.CharField(max_length=128)
-	password =  models.CharField(max_length=128)
+	password =  models.CharField(max_length=2048)
 
 	# completed, pending, blocked, error
 	verificationStatus = models.CharField(max_length=128)

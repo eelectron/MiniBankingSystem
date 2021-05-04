@@ -1,6 +1,7 @@
 from django.shortcuts import render
-
-from django.contrib.auth.hashers import make_password
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.hashers import make_password, check_password
 
 from . models import Customer
 
@@ -20,7 +21,30 @@ def index(request):
 '''
 def login(request):
 	if request.method == "POST":
-		print("login")
+		# get info from login form
+		userName = request.POST["userName"]
+		password = request.POST["password"]
+
+		# check if user is valid
+		customer = None
+		try:
+			# check if userName exist in DB
+			customer = Customer.objects.get(userName=userName)
+
+			# check if user have entered correct password
+			if check_password(password, customer.password) == False:
+				customer = None
+		except:
+			customer = None
+		
+		# save customer in session
+		if customer is not None:
+			print(request)
+			return HttpResponseRedirect(reverse('mainPage'))
+		else:
+			# return to login page with error message
+			context = {"message": "Invalid credentials"}
+			return render(request, "banking/login.html", context) 
 	else:
 		return render(request, "banking/login.html")
 
@@ -38,6 +62,7 @@ def register(request):
 	if request.method == "POST":
 		
 		# get the information from form
+		print(request.POST)
 		userName = request.POST["userName"]
 		firstName = request.POST["firstName"]
 		lastName = request.POST["lastName"]
@@ -48,8 +73,8 @@ def register(request):
 		# insert it in DB
 		customer = Customer(userName=userName, firstName=firstName, lastName=lastName, email=email, phone=phone, password=password, verificationStatus="verified")
 		customer.save()
-
-		return render(request, "banking/login.html")
+		print(customer)
+		return HttpResponseRedirect(reverse('login'))
 	else:
 		return render(request, "banking/register.html")
 
@@ -72,3 +97,10 @@ def createAccount(request):
 '''
 def transfer(request):
 	print("transfer")
+
+'''
+Show main page
+'''
+def mainPage(request):
+	context = {"customer": ":)"}
+	return render(request, "banking/banking.html", context)
